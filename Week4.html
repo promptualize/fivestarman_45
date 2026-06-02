@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fivestarman Week 4   Discussion Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1614;
+    --bg-elev: #221d1a;
+    --bg-card: #28221e;
+    --ink: #f4ebe0;
+    --ink-dim: #c9b8a6;
+    --ink-faint: #8a7a6b;
+    --rule: #3a312a;
+    --accent: #c4884f;
+    --accent-dim: #8a5e36;
+    --crimson: #a8442a;
+    --verse: #d4b896;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(at 20% 10%, rgba(196, 136, 79, 0.04) 0%, transparent 50%),
+      radial-gradient(at 80% 90%, rgba(168, 68, 42, 0.03) 0%, transparent 50%);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 32px 120px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header {
+    text-align: center;
+    padding: 32px 0 40px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(38px, 7vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-dim);
+    font-weight: 400;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+    color: var(--accent-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .header-rule::before,
+  .header-rule::after {
+    content: "";
+    height: 1px;
+    width: 60px;
+    background: var(--accent-dim);
+  }
+
+  .intro {
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .intro::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--crimson);
+    opacity: 0.7;
+  }
+
+  .intro-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--crimson);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .intro-text {
+    font-size: 16px;
+    color: var(--ink-dim);
+    line-height: 1.7;
+  }
+
+  .day-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .day-nav button {
+    padding: 12px 16px;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+
+  .day-nav button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(196, 136, 79, 0.05);
+  }
+
+  .day-nav button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+  }
+
+  .day {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 44px 44px;
+    margin-bottom: 28px;
+    position: relative;
+    scroll-margin-top: 100px;
+  }
+
+  .day::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 80px;
+    background: var(--accent);
+  }
+
+  .day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+
+  .day-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .day-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .passion-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 6px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .section:last-of-type {
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: var(--ink-faint);
+  }
+
+  .summary {
+    font-size: 16px;
+    color: var(--ink-dim);
+    line-height: 1.7;
+  }
+
+  .summary em {
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  .verse-block {
+    background: var(--bg-card);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin: 8px 0;
+    position: relative;
+  }
+
+  .verse-block::before {
+    content: "\201C";
+    position: absolute;
+    top: -20px;
+    left: 16px;
+    font-family: 'Fraunces', serif;
+    font-size: 80px;
+    color: var(--accent-dim);
+    line-height: 1;
+    opacity: 0.5;
+  }
+
+  .verse-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--verse);
+    margin-bottom: 12px;
+  }
+
+  .verse-ref {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+
+  .question {
+    font-size: 16px;
+    color: var(--ink-dim);
+    line-height: 1.7;
+  }
+
+  .toggle {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .toggle:hover {
+    background: var(--bg-elev);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .toggle.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .chevron {
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .toggle.active .chevron {
+    transform: rotate(180deg);
+  }
+
+  .toggle-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .toggle-content.active {
+    max-height: 2000px;
+  }
+
+  .toggle-inner {
+    padding: 24px 20px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-top: none;
+    border-radius: 0 0 2px 2px;
+  }
+
+  .examples-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .examples-list li {
+    font-size: 15px;
+    color: var(--ink-dim);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .examples-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .examples-list strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .examples-list em {
+    color: var(--verse);
+    font-style: italic;
+  }
+
+  .footer {
+    text-align: center;
+    padding-top: 60px;
+    margin-top: 60px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-verse {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--verse);
+    margin-bottom: 12px;
+  }
+
+  .footer-ref {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+
+  .footer-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 40px 20px 80px;
+    }
+    .day {
+      padding: 28px 24px;
+    }
+    .day-title {
+      font-size: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header">
+      <a href="index.html" style="display: inline-block; margin-bottom: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.3em; color: #c4884f; text-decoration: none; text-transform: uppercase;">← All Weeks</a>
+      <div class="eyebrow">Fivestarman 45-Day Challenge</div>
+      <h1 class="title">Week <em>Four</em></h1>
+      <p class="subtitle">Discussion Guide · Days 22 through 28</p>
+      <div class="header-rule">Guide</div>
+    </header>
+
+    <div class="intro">
+      <div class="intro-label">A word before we start</div>
+      <p class="intro-text">Week Four is where the work turns inward and outward at once. Days 22-28 move through written goals, the guarding of relationships, presence with your children, the courage to be kind and stand firm, refusing to coast at the halfway grind, integrity in business, and the plain, active work of loving your wife. Less theory, more practice. This is the stretch where the men who keep showing up start to separate from the ones who drift.</p>
+    </div>
+
+    <nav class="day-nav">
+      <button onclick="scrollToDay('day1')" data-day="1">D22</button>
+      <button onclick="scrollToDay('day2')" data-day="2">D23</button>
+      <button onclick="scrollToDay('day3')" data-day="3">D24</button>
+      <button onclick="scrollToDay('day4')" data-day="4">D25</button>
+      <button onclick="scrollToDay('day5')" data-day="5">D26</button>
+      <button onclick="scrollToDay('day6')" data-day="6">D27</button>
+      <button onclick="scrollToDay('day7')" data-day="7">D28</button>
+    </nav>
+
+    <!-- DAY 22 -->
+    <article class="day" id="day1">
+      <div class="day-header">
+        <div>
+          <div class="day-number">Day 22 · Wednesday May 27</div>
+          <h2 class="day-title">Set Your Goals</h2>
+        </div>
+        <span class="passion-tag">Entrepreneurial</span>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <p class="summary">Clarity is what separates the few from the many. Kennedy points to the research that men with clearly written goals dramatically outperform those without them. A goal that lives only in your head is a wish; a goal on paper becomes a direction. The five markers (vision, action, adjustments, results, pruning) describe how you pursue a goal once it is set, but the first move is simply getting honest about what you actually want and writing it down. The challenge is to write a list of ten goals.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Verse</div>
+        <div class="verse-block">
+          <p class="verse-text">I press toward the mark for the prize of the high calling of God in Christ Jesus.</p>
+          <div class="verse-ref">Philippians 3:14</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Discussion Question</div>
+        <p class="question">If you're honest, do you have clearly written goals for your life right now, and if not, what has kept you from putting them on paper?</p>
+      </div>
+
+      <button class="toggle" onclick="toggleContent(this)">
+        <span>Examples for the Group</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <ul class="examples-list">
+            <li>Goals that live in your head but have never been written down, so they stay vague</li>
+            <li>Knowing the difference between a wish and a goal, and admitting most of yours are still wishes</li>
+            <li>Fear that writing it down makes it real, and makes failure measurable</li>
+            <li>Goals that span the whole man: business, family, faith, character, relationships, not just career</li>
+            <li>Busyness as the excuse, when the truth is you've never made the time to sit and define the target</li>
+            <li>A goal as personal as <em>be the best husband I can be</em> sitting right next to a concrete business target</li>
+            <li>Realizing the act of writing them is the point, even before the pursuit begins</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- DAY 23 -->
+    <article class="day" id="day2">
+      <div class="day-header">
+        <div>
+          <div class="day-number">Day 23 · Thursday May 28</div>
+          <h2 class="day-title">Women Deserve Your Respect</h2>
+        </div>
+        <span class="passion-tag">Gallant</span>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <p class="summary">A line of respect governs every relationship, and crossing it is where misconduct begins. Kennedy calls it the principle of proximity: you cannot sin if you keep the proper relational distance. A gallant man reserves the intimacy of his eyes and the passion of his body for his wife alone, and treats every other woman with deliberate honor, older women as mothers, peers as sisters, younger as daughters. The practical list, from opening doors to guarding how you communicate online, is less about etiquette and more about building habits that keep you out of compromise before temptation has a foothold.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Verse</div>
+        <div class="verse-block">
+          <p class="verse-text">Treat older women as mothers, and younger women as sisters, with absolute purity.</p>
+          <div class="verse-ref">1 Timothy 5:2</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Discussion Question</div>
+        <p class="question">In what areas of your life, social media, workplace, casual conversation, do you find it most challenging to maintain the principle of proximity with women who aren't your wife?</p>
+      </div>
+
+      <button class="toggle" onclick="toggleContent(this)">
+        <span>Examples for the Group</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <ul class="examples-list">
+            <li>The gray area of online communication: DMs, comments, texts that drift outside proper protocols</li>
+            <li>Workplace friendships that are appropriate but could quietly lose their guardrails over time</li>
+            <li>Casual flattery or banter that feels harmless but erodes the line of respect</li>
+            <li>Keeping the right physical and relational distance without becoming cold or strange about it</li>
+            <li>Recognizing that guarding these lines also sows protection for your own wife and daughters</li>
+            <li>The discipline of deciding in advance, before the moment, where the line is</li>
+            <li>Honoring women in a way that's visibly different, not performative, but principled</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- DAY 24 -->
+    <article class="day" id="day3">
+      <div class="day-header">
+        <div>
+          <div class="day-number">Day 24 · Friday May 29</div>
+          <h2 class="day-title">Talk To Your Children</h2>
+        </div>
+        <span class="passion-tag">Faithful</span>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <p class="summary">You can't direct your children's lives without a real relationship, and that relationship is built on time and presence, something most fathers are starving their kids of. Kennedy cites the figure that the average father spends about three and a half minutes a week in meaningful conversation with his children, and frames distraction and passivity as the enemy's strategy: if he can't convince you that you have no role, he'll keep you too busy to fill it. The fixes are unglamorous and specific, read Proverbs together, ask real questions, kill the screens, eat together, laugh, and spend deliberate time. The window of childhood is short, and the call is to slow down and shift the focus off yourself and onto them.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Verse</div>
+        <div class="verse-block">
+          <p class="verse-text">He will turn the hearts of the fathers to their children, and the hearts of the children to their fathers.</p>
+          <div class="verse-ref">Malachi 4:5</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Discussion Question</div>
+        <p class="question">What is one specific distraction that most consistently pulls you away from meaningful conversation with your kids, and what would it look like to eliminate it?</p>
+      </div>
+
+      <button class="toggle" onclick="toggleContent(this)">
+        <span>Examples for the Group</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <ul class="examples-list">
+            <li>The phone at the dinner table or in your hand during the conversation that should have your eyes</li>
+            <li>The TV left on as background noise that quietly replaces real talk</li>
+            <li>Work that follows you home and keeps your mind somewhere other than where your kids are</li>
+            <li>Defaulting to yes/no questions instead of ones that require a thoughtful answer</li>
+            <li>A concrete habit to build: reading the day's chapter of Proverbs together every evening</li>
+            <li>Counting how many summers you actually have left with them, and letting that reorder your time</li>
+            <li>The difference between being in the room and being present in the room</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- DAY 25 -->
+    <article class="day" id="day4">
+      <div class="day-header">
+        <div>
+          <div class="day-number">Day 25 · Saturday May 30</div>
+          <h2 class="day-title">Be Kind and Stand Firm</h2>
+        </div>
+        <span class="passion-tag">Philanthropic</span>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <p class="summary">Being philanthropic isn't only generosity; it's the way you carry your convictions into a divided culture. The call is to hold two things at once: stand firm on principle without flinching, and stay genuinely kind toward people who see the world differently. Kennedy gives a practical code for arguing well, know your subject, lead with facts rather than theories, concede the points that are true, and drop the personal attacks and intimidation. But the real weight lands on the challenge itself: go have a real conversation with someone who disagrees with you, and listen to understand rather than to win. The warning in the verse is that cruelty, even when you're right, costs you more than the argument is worth.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Verse</div>
+        <div class="verse-block">
+          <p class="verse-text">Those who are kind benefit themselves, but the cruel bring ruin on themselves.</p>
+          <div class="verse-ref">Proverbs 11:17</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Discussion Question</div>
+        <p class="question">Is there a cause or conviction you believe in deeply but have stayed silent about because you didn't want conflict, and what would it take for you to speak up with both boldness and kindness?</p>
+      </div>
+
+      <button class="toggle" onclick="toggleContent(this)">
+        <span>Examples for the Group</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <ul class="examples-list">
+            <li>The instinct to reach for <em>I don't really have any disagreements</em> when the truth is they just go unspoken</li>
+            <li>Agreement inside the church huddle that's really proximity, not actual alignment</li>
+            <li>Disagreements with your wife or a close friend that you let drop or quietly steamrolled instead of trying to understand</li>
+            <li>Knowing your subject and supporting it with facts, not theories, before you ever open your mouth</li>
+            <li>Conceding the points that are true while standing firm on the principle underneath</li>
+            <li>The hard part of the challenge: listening to understand why they believe it, not listening to respond</li>
+            <li>Disagreeing without being disagreeable, calming the rhetoric instead of adding to it</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- DAY 26 -->
+    <article class="day" id="day5">
+      <div class="day-header">
+        <div>
+          <div class="day-number">Day 26 · Sunday May 31</div>
+          <h2 class="day-title">Don't Give Up!</h2>
+        </div>
+        <span class="passion-tag">Adventurous</span>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <p class="summary">Day 26 lands right at the halfway grind, where the newness has worn off and the temptation is to coast. To be weary, Kennedy notes, is to become utterly spiritless, and that's exactly the stage where many men start questioning whether the work is worth it. He frames perseverance through physical fitness, using the five R's of strength building, resistance, repetition, rest, routine, and rewards, as a parallel to building authentic manhood. The real point isn't push-ups; it's whether you press through resistance instead of settling for average once the initial motivation fades.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Verse</div>
+        <div class="verse-block">
+          <p class="verse-text">Brethren, do not be weary in well-doing.</p>
+          <div class="verse-ref">2 Thessalonians 3:13</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Discussion Question</div>
+        <p class="question">Where in your life right now are you most tempted to coast or settle for the status quo, and what would pressing through actually look like?</p>
+      </div>
+
+      <button class="toggle" onclick="toggleContent(this)">
+        <span>Examples for the Group</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <ul class="examples-list">
+            <li>Physical fitness specifically: a gym you don't use, a daily walk you keep saying you'll start</li>
+            <li>A business or career area where you've quietly accepted average because pressing in got uncomfortable</li>
+            <li>A relationship you're maintaining instead of actually investing in</li>
+            <li>Spiritual disciplines that have gone from fresh to routine to neglected</li>
+            <li>Naming the resistance instead of avoiding it, since resistance is what builds resolve</li>
+            <li>What pressing through looks like in concrete terms this week, not someday</li>
+            <li>The difference between rest that recovers you and coasting that erodes you</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- DAY 27 -->
+    <article class="day" id="day6">
+      <div class="day-header">
+        <div>
+          <div class="day-number">Day 27 · Monday June 1</div>
+          <h2 class="day-title">Integrity In Business</h2>
+        </div>
+        <span class="passion-tag">Entrepreneurial</span>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <p class="summary">Integrity isn't a soft virtue; it's the structural foundation that determines whether a business lasts or collapses, as 2008 proved when greed severed the thin line of integrity. Kennedy lays out five tests, each forcing a choice between something flashy and something solid: value character above talent, self-control above greed, honest lips above the flatterer, diligence above zeal, and an honest assessment above inflated books. The throughline is that you're playing the long game, not the get-rich-quick scheme, and shortcuts that compromise integrity always come due eventually. The challenge is to examine your own business relationships honestly against those tests.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Verse</div>
+        <div class="verse-block">
+          <p class="verse-text">But as for me, I shall walk in my integrity.</p>
+          <div class="verse-ref">Psalm 26:11</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Discussion Question</div>
+        <p class="question">Which of the Five Tests of Integrity do you find most difficult to consistently apply in your work, and why?</p>
+      </div>
+
+      <button class="toggle" onclick="toggleContent(this)">
+        <span>Examples for the Group</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <ul class="examples-list">
+            <li>Character above talent: keeping the right people even when the talented ones cut corners</li>
+            <li>Self-control above greed: walking away from money that comes with strings on your conscience</li>
+            <li>Honest lips above the flatterer: surrounding yourself with people who tell you the truth</li>
+            <li>Diligence above zeal: steady, faithful work over the burst of excitement that fades</li>
+            <li>Honest assessment above inflated books: telling the truth about where the business actually stands</li>
+            <li>A questionable partnership you've tolerated because ending it would be costly or awkward</li>
+            <li>Remembering money is a by-product of righteous thinking, not the answer to the problem</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- DAY 28 -->
+    <article class="day" id="day7">
+      <div class="day-header">
+        <div>
+          <div class="day-number">Day 28 · Tuesday June 2</div>
+          <h2 class="day-title">How To Love Your Wife</h2>
+        </div>
+        <span class="passion-tag">Gallant</span>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <p class="summary">Day 28 reframes loving your wife as a verb, not a sentiment. Kennedy builds it around a long list of plainly stated requests from real women completing the sentence "I wish my husband would love me by," and the things they ask for are unglamorous and specific: to be listened to, to have their small problems taken seriously, to be noticed apart from sex, to be thanked, included, understood, and treated tenderly without an agenda. The challenge isn't to feel more love; it's to do one concrete loving act today, in one of the ways she'd actually name.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Verse</div>
+        <div class="verse-block">
+          <p class="verse-text">Husbands, love your wives, just as Christ also loved the church and gave Himself up for her.</p>
+          <div class="verse-ref">Ephesians 5:25</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Discussion Question</div>
+        <p class="question">Looking at the list of ways women wish their husbands would love them, which one do you know your wife would say she needs more of from you?</p>
+      </div>
+
+      <button class="toggle" onclick="toggleContent(this)">
+        <span>Examples for the Group</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <ul class="examples-list">
+            <li>Listening to her without immediately moving to fix or solve</li>
+            <li>Noticing and thanking her for the things that usually go unspoken</li>
+            <li>Sharing your goals, your work, and your decisions instead of carrying them alone</li>
+            <li>Time without the kids, deliberate and planned, not whatever's left over</li>
+            <li>Tender words and affection that aren't tied to wanting something in return</li>
+            <li>For a couple who also work together, separating the partner from the cofounder so she's loved as a wife first</li>
+            <li>Picking the item that exposes the real gap, not the one that's easy to nod at</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <footer class="footer">
+      <p class="footer-verse">How can we pray for you this week?</p>
+      <div class="footer-ref"></div>
+      <p class="footer-meta">Fivestarman · Authentic Manhood Challenge · Week Four</p>
+    </footer>
+  </div>
+
+  <script>
+    function toggleContent(button) {
+      const content = button.nextElementSibling;
+      button.classList.toggle('active');
+      content.classList.toggle('active');
+    }
+
+    function scrollToDay(dayId) {
+      const element = document.getElementById(dayId);
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
