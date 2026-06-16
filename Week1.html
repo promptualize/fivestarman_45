@@ -422,25 +422,22 @@
   }
 
   .examples-list li {
-    padding: 10px 0 10px 24px;
+    padding: 10px 0 10px 22px;
     position: relative;
     color: var(--ink-dim);
     font-size: 15px;
     line-height: 1.5;
-    border-bottom: 1px dashed var(--rule);
-  }
-
-  .examples-list li:last-child {
-    border-bottom: none;
   }
 
   .examples-list li::before {
-    content: "→";
+    content: "";
     position: absolute;
-    left: 0;
-    top: 10px;
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
+    left: 4px;
+    top: 18px;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
   }
 
   .my-answer {

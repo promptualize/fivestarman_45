@@ -397,6 +397,19 @@
     color: var(--ink-dim);
     line-height: 1.7;
     margin-bottom: 12px;
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .examples-list li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 11px;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
   }
 
   .examples-list li:last-child {
